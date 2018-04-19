@@ -6,10 +6,9 @@ func () {
 		nohup zathura "$book" > /dev/null 2>&1 &
 	done
 
-	xdotool search --onlyvisible --name "pdf.shfuzzy" windowunmap
+    sleep 0.1
 }
 
-while true
-do
-	func
-done
+func
+
+exit "$?"

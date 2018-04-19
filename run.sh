@@ -21,7 +21,7 @@ run () {
 	[ -n "$ZSH_VERSION"  ] && func="zsh_list_commands"
 	[ -z "$func" ] && func="posix_list_commands"
 
-	$func | fzf --print-query --reverse --multi | while read -r command
+	$func | fzf --print-query --reverse --multi | sort -u | while read -r command
 	do
 		[ -z "$command" ] && continue
 
@@ -29,11 +29,9 @@ run () {
 		[ -z "$SHELL" ] && SHELL="/bin/sh"
 		nohup "$SHELL" -c "$command" > /dev/null 2>&1 &
 	done
-
-	xdotool search --onlyvisible --name "run.shfuzzy" windowunmap
+    sleep 0.1
 }
 
-while true
-do
-	run
-done
+run
+
+exit "$?"

@@ -10,12 +10,17 @@ drun () {
 		[ -z "$command" ] && continue
 
 		# shellcheck disable=SC2091
-		$(grep -E '^Exec' "$command" | tail -1 | sed -e 's/^Exec=//' -e 's/%.//'  -e 's/^"//g' -e 's/" *$//g') > /dev/null 2>&1 &
+		nohup $SHELL -c "$(grep -E '^Exec' "$command" | tail -1 | sed -e 's/^Exec=//' -e 's/%.//'  -e 's/^"//g' -e 's/" *$//g')" > /dev/null 2>&1 &
 	done
-	xdotool search --onlyvisible --name "drun.shfuzzy" windowunmap
+
+    sleep 0.1
 }
 
-while true
-do
-	drun
-done
+drun
+
+exit "$?"
+
+#while true
+#do
+#	drun
+#done
